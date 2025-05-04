@@ -36,7 +36,7 @@ public class KardexServiceOpenAPIConfiguration {
                         .addSecuritySchemes(OAUTH2_SECURITY_SCHEME, new SecurityScheme()
                                 .flows(new OAuthFlows()
                                         .clientCredentials(new OAuthFlow()
-                                                .tokenUrl("https://.../oauth/token")))
+                                                .tokenUrl("https://sicei.us.auth0.com/oauth/token")))
                                 .type(SecurityScheme.Type.OAUTH2)))
                 .info(apiInformation);
     }

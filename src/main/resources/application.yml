@@ -16,8 +16,8 @@ springdoc:
 
 okta:
   oauth2:
-    audience: https://
-    issuer: https://.us.auth0.com/
+    audience: https://api-sicei.abrahamespinosa.net
+    issuer: https://sicei.us.auth0.com/
 
 cors:
-  origins: "https://"
+  origins: "https://sicei.abrahamespinosa.net"
