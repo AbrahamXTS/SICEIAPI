@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: backend-certificate
+  namespace: sicei
+spec:
+  secretName: backend-certificate
+  dnsNames:
+    - api-sicei.abrahamespinosa.net
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer

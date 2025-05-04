@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: kardex-service
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/sicei?zeroDateTimeBehavior=convertToNull&serverTimezone=America/Mexico_City
+  mvc:
+    servlet:
+      path: /api/v1
+
+springdoc:
+  swagger-ui:
+    path: /docs
+
+okta:
+  oauth2:
+    audience: https://
+    issuer: https://.us.auth0.com/
+
+cors:
+  origins: "https://"

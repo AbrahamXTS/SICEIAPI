@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kardex-service
+  namespace: sicei
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kardex-service
+  template:
+    metadata:
+      labels:
+        app: kardex-service
+      namespace: sicei
+    spec:
+      containers:
+        - image: nexus-repository.abrahamespinosa.dev/sicei/kardex-service:latest
+          imagePullPolicy: Always
+          name: kardex-service
+          ports:
+            - containerPort: 8080
+              name: service-port
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: kardex-service-configuration
+                optional: false
+            - secretRef:
+                name: kardex-service-secrets
+                optional: false
+      imagePullSecrets:
+        - name: nexus-repository-credentials

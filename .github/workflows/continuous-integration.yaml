@@ -1,0 +1,56 @@
+name: sicei-continuous-integration-workflow
+
+on:
+  push:
+    branches:
+      - development
+      - qa
+      - main
+  pull_request:
+    branches:
+      - development
+      - qa
+      - main
+
+jobs:
+  deploy-project:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup java & maven
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'microsoft'
+
+      - name: Login to docker registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.NEXUS_REPOSITORY_HOSTNAME }}
+          username: ${{ secrets.NEXUS_REPOSITORY_USERNAME }}
+          password: ${{ secrets.NEXUS_REPOSITORY_PASSWORD }}
+
+      - name: Setup kubectl
+        uses: tale/kubectl-action@v1
+        with:
+          base64-kube-config: ${{ secrets.LOCAL_CLUSTER_KUBECONFIG }}
+          kubectl-version: v1.32.0
+
+      - name: Install project dependencies
+        run: mvn clean install
+
+      - name: Extract application properties
+        id: kardex-service-properties
+        uses: andreacomo/maven-gav-extractor@v2
+        with:
+          pom-location: ./pom.xml
+
+      - name: Build, push and deploy image
+        working-directory: .
+        run: |
+          docker build -t ${{ secrets.NEXUS_REPOSITORY_HOSTNAME }}/sicei/kardex-service:${{ steps.kardex-service-properties.outputs.version }} .
+          docker push ${{ secrets.NEXUS_REPOSITORY_HOSTNAME }}/sicei/kardex-service:${{ steps.kardex-service-properties.outputs.version }}
+          kubectl apply --kustomize kubernetes/overlays/prod
+          kubectl set image deployment/kardex-service -n=sicei kardex-service=${{ secrets.NEXUS_REPOSITORY_HOSTNAME }}/sicei/kardex-service:${{ steps.kardex-service-properties.outputs.version }}

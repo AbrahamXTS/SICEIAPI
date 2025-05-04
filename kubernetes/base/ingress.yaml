@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kardex-service-ingress
+  namespace: sicei
+  labels:
+    name: kardex-service-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: api-sicei.abrahamespinosa.net
+      http:
+        paths:
+          - backend:
+              service:
+                name: kardex-service-cluster-ip
+                port:
+                  number: 8080
+            path: /api/v1
+            pathType: Prefix
+  tls:
+    - hosts:
+        - api-sicei.abrahamespinosa.net
+      secretName: backend-certificate
