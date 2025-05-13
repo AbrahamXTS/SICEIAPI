@@ -1,0 +1,34 @@
+package mx.uady.sicei.kardex_service.schemas;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@Entity(name = "grade")
+public class GradeSchema extends BaseSchema {
+    @Column
+    @Min(0)
+    @Max(100)
+    private Double score;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "student_id")
+    private StudentSchema student;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "course_id")
+    private CourseSchema course;
+}
