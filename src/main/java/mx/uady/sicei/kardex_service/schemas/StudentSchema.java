@@ -37,6 +37,9 @@ public class StudentSchema extends BaseSchema {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
+    private Integer equivalentDegree;
+
     @OneToMany(mappedBy = "student")
     private List<EnrollmentSchema> enrollments;
 }
