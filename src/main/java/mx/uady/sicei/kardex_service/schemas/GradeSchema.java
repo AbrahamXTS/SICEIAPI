@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
@@ -22,20 +22,16 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @Entity(name = "grade")
 public class GradeSchema extends BaseSchema {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.UUID)
+  private String id;
 
-    @Column
-    @Min(0)
-    @Max(100)
-    private Double score;
+  @Column
+  @Min(0)
+  @Max(100)
+  private Double score;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "student_id")
-    private StudentSchema student;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "course_id")
-    private CourseSchema course;
+  @OneToOne(optional = false)
+  @JoinColumn(name = "enrollment_id", unique = true)
+  private EnrollmentSchema enrollment;
 }

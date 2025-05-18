@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Enrollment {
+public class Grade {
   private String id;
-  private Student student;
-  private Course course;
-  private Grade grade;
-  private CourseType enrollmentType;
+  private Double score;
 }

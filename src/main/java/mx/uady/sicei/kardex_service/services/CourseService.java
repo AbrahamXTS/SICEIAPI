@@ -56,7 +56,6 @@ public class CourseService {
                 .subject(subject)
                 .teacher(teacher)
                 .enrollments(Collections.emptyList())
-                .grades(Collections.emptyList())
                 .build());
 
     return courseMapper.toModel(course);

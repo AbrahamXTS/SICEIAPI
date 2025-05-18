@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(
     componentModel = "spring",
-    uses = {CourseMapper.class, StudentMapper.class})
+    uses = {CourseMapper.class, GradeMapper.class, StudentMapper.class})
 public interface EnrollmentMapper {
   Enrollment toModel(EnrollmentSchema student);
 

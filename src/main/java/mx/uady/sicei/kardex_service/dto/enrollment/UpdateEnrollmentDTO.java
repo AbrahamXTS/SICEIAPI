@@ -15,5 +15,5 @@ public class UpdateEnrollmentDTO {
   @NotBlank private String id;
   @NotBlank private String studentId;
   @NotBlank private String courseId;
-  @NotBlank private CourseType enrollmentType;
+  private CourseType enrollmentType;
 }

@@ -14,5 +14,5 @@ import mx.uady.sicei.kardex_service.models.CourseType;
 public class CreateEnrollmentDTO {
   @NotBlank private String studentId;
   @NotBlank private String courseId;
-  @NotBlank private CourseType enrollmentType;
+  private CourseType enrollmentType;
 }

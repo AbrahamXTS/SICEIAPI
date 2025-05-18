@@ -16,7 +16,6 @@ public interface CourseMapper {
   @Mapping(target = "updatedAt", ignore = true)
   @Mapping(target = "deleted", ignore = true)
   @Mapping(target = "enrollments", ignore = true)
-  @Mapping(target = "grades", ignore = true)
   CourseSchema toSchema(Course course);
 
   List<Course> toModelList(List<CourseSchema> courses);
