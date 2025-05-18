@@ -13,6 +13,7 @@ public interface GradeMapper {
   @Mapping(target = "createdAt", ignore = true)
   @Mapping(target = "updatedAt", ignore = true)
   @Mapping(target = "deleted", ignore = true)
+  @Mapping(target = "enrollment", ignore = true)
   GradeSchema toSchema(Grade student);
 
   List<Grade> toModelList(List<GradeSchema> students);

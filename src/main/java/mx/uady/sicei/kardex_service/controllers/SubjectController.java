@@ -10,6 +10,7 @@ import mx.uady.sicei.kardex_service.models.Subject;
 import mx.uady.sicei.kardex_service.services.SubjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class SubjectController {
   }
 
   @GetMapping("/{subjectId}")
+  @PreAuthorize("hasAuthority('subject:read')")
   public ResponseEntity<ResponseWrapper<Subject>> getSubjectById(@PathVariable String subjectId) {
     return ResponseEntity.status(HttpStatus.OK)
         .body(
@@ -41,6 +43,7 @@ public class SubjectController {
   }
 
   @GetMapping
+  @PreAuthorize("hasAuthority('subject:list')")
   public ResponseEntity<ResponseWrapper<List<Subject>>> getAllSubjects() {
     return ResponseEntity.status(HttpStatus.OK)
         .body(
@@ -52,6 +55,7 @@ public class SubjectController {
   }
 
   @PostMapping
+  @PreAuthorize("hasAuthority('subject:create')")
   public ResponseEntity<ResponseWrapper<Subject>> createSubject(
       @RequestBody @Valid CreateSubjectDTO subject) {
     return ResponseEntity.status(HttpStatus.CREATED)
@@ -64,6 +68,7 @@ public class SubjectController {
   }
 
   @PutMapping
+  @PreAuthorize("hasAuthority('subject:update')")
   public ResponseEntity<ResponseWrapper<Subject>> updateSubject(
       @RequestBody @Valid UpdateSubjectDTO subject) {
     return ResponseEntity.status(HttpStatus.OK)
@@ -76,6 +81,7 @@ public class SubjectController {
   }
 
   @DeleteMapping("/{subjectId}")
+  @PreAuthorize("hasAuthority('subject:delete')")
   public ResponseEntity<ResponseWrapper<Void>> deleteSubjectById(@PathVariable String subjectId) {
     subjectService.deleteSubject(subjectId);
 

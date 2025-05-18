@@ -10,6 +10,7 @@ import mx.uady.sicei.kardex_service.models.Student;
 import mx.uady.sicei.kardex_service.services.StudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class StudentController {
   }
 
   @GetMapping("/{studentId}")
+  @PreAuthorize("hasAuthority('student:read')")
   public ResponseEntity<ResponseWrapper<Student>> getStudentById(@PathVariable String studentId) {
     return ResponseEntity.status(HttpStatus.OK)
         .body(
@@ -41,6 +43,7 @@ public class StudentController {
   }
 
   @GetMapping
+  @PreAuthorize("hasAuthority('student:list')")
   public ResponseEntity<ResponseWrapper<List<Student>>> getAllStudents() {
     return ResponseEntity.status(HttpStatus.OK)
         .body(
@@ -52,6 +55,7 @@ public class StudentController {
   }
 
   @PostMapping
+  @PreAuthorize("hasAuthority('student:create')")
   public ResponseEntity<ResponseWrapper<Student>> createStudent(
       @RequestBody @Valid CreateStudentDTO student) {
     return ResponseEntity.status(HttpStatus.CREATED)
@@ -67,6 +71,7 @@ public class StudentController {
   }
 
   @PutMapping
+  @PreAuthorize("hasAuthority('student:update')")
   public ResponseEntity<ResponseWrapper<Student>> updateStudent(
       @RequestBody @Valid UpdateStudentDTO student) {
     return ResponseEntity.status(HttpStatus.OK)
@@ -79,6 +84,7 @@ public class StudentController {
   }
 
   @DeleteMapping("/{studentId}")
+  @PreAuthorize("hasAuthority('student:delete')")
   public ResponseEntity<ResponseWrapper<Void>> deleteStudentById(@PathVariable String studentId) {
     studentService.deleteStudent(studentId);
 

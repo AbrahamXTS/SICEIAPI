@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 import mx.uady.sicei.kardex_service.dto.commons.ResponseWrapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -31,6 +32,20 @@ public class SICEIExceptionHandler {
             ResponseWrapper.<Void>builder()
                 .success(false)
                 .message(exception.getMessage())
+                .data(null)
+                .build());
+  }
+
+  @ExceptionHandler(AuthorizationDeniedException.class)
+  public ResponseEntity<ResponseWrapper<Void>> authorizationDeniedExceptionHandler(
+      RuntimeException exception) {
+    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+        .body(
+            ResponseWrapper.<Void>builder()
+                .success(false)
+                .message(
+                    "Lo sentimos, pero no tienes los permisos suficientes para acceder a este"
+                        + " recurso.")
                 .data(null)
                 .build());
   }
