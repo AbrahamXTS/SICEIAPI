@@ -24,10 +24,6 @@ public class SecurityConfiguration {
                   .requestMatchers("/docs", "/webjars/**", "/swagger-ui/**", "/v3/api-docs/**")
                   .permitAll();
 
-              secureAPI(requests, "/students/**", "student");
-              secureAPI(requests, "/courses/**", "course");
-              secureAPI(requests, "/grades/**", "grade");
-
               requests.anyRequest().authenticated();
             })
         .csrf(AbstractHttpConfigurer::disable)
