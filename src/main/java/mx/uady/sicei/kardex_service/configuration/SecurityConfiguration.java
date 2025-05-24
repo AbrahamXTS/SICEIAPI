@@ -44,7 +44,7 @@ public class SecurityConfiguration {
   private JwtAuthenticationConverter getPermissionsConverter() {
     JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter =
         new JwtGrantedAuthoritiesConverter();
-    jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("scope");
+    jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("permissions");
     jwtGrantedAuthoritiesConverter.setAuthorityPrefix("");
 
     JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
