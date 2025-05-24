@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UpdateGradeDTO {
   @NotBlank private String id;
-  @NotBlank private String enrollmentId;
 
   @Min(0)
   @Max(100)

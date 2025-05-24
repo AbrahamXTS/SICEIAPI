@@ -5,26 +5,38 @@ import java.util.List;
 import mx.uady.sicei.kardex_service.dto.student.CreateStudentDTO;
 import mx.uady.sicei.kardex_service.dto.student.UpdateStudentDTO;
 import mx.uady.sicei.kardex_service.exceptions.ResourceNotFoundException;
+import mx.uady.sicei.kardex_service.mappers.EnrollmentMapper;
 import mx.uady.sicei.kardex_service.mappers.StudentMapper;
+import mx.uady.sicei.kardex_service.models.Enrollment;
 import mx.uady.sicei.kardex_service.models.Student;
+import mx.uady.sicei.kardex_service.repositories.EnrollmentRepository;
 import mx.uady.sicei.kardex_service.repositories.StudentRepository;
+import mx.uady.sicei.kardex_service.schemas.EnrollmentSchema;
 import mx.uady.sicei.kardex_service.schemas.StudentSchema;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StudentService {
+  private final EnrollmentRepository enrollmentRepository;
+  private final EnrollmentMapper enrollmentMapper;
   private final StudentMapper studentMapper;
   private final StudentRepository studentRepository;
 
-  public StudentService(StudentMapper studentMapper, StudentRepository studentRepository) {
+  public StudentService(
+      EnrollmentRepository enrollmentRepository,
+      EnrollmentMapper enrollmentMapper,
+      StudentMapper studentMapper,
+      StudentRepository studentRepository) {
+    this.enrollmentRepository = enrollmentRepository;
+    this.enrollmentMapper = enrollmentMapper;
     this.studentMapper = studentMapper;
     this.studentRepository = studentRepository;
   }
 
-  public Student getStudentById(String studentId) {
-    StudentSchema student = this.findStudentByIdOrThrowAnException(studentId);
+  public List<Enrollment> getEnrollmentsByStudentId(String studentId) {
+    List<EnrollmentSchema> enrollments = enrollmentRepository.findAllByStudentId(studentId);
 
-    return studentMapper.toModel(student);
+    return enrollmentMapper.toModelList(enrollments);
   }
 
   public List<Student> getAllStudents() {

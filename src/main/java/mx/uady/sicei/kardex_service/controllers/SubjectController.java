@@ -30,18 +30,6 @@ public class SubjectController {
     this.subjectService = subjectService;
   }
 
-  @GetMapping("/{subjectId}")
-  @PreAuthorize("hasAuthority('subject:read')")
-  public ResponseEntity<ResponseWrapper<Subject>> getSubjectById(@PathVariable String subjectId) {
-    return ResponseEntity.status(HttpStatus.OK)
-        .body(
-            ResponseWrapper.<Subject>builder()
-                .success(true)
-                .message("Asignatura con id %s:".formatted(subjectId))
-                .data(subjectService.getSubjectById(subjectId))
-                .build());
-  }
-
   @GetMapping
   @PreAuthorize("hasAuthority('subject:list')")
   public ResponseEntity<ResponseWrapper<List<Subject>>> getAllSubjects() {

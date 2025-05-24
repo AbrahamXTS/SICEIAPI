@@ -6,9 +6,13 @@ import mx.uady.sicei.kardex_service.dto.course.CreateCourseDTO;
 import mx.uady.sicei.kardex_service.dto.course.UpdateCourseDTO;
 import mx.uady.sicei.kardex_service.exceptions.ResourceNotFoundException;
 import mx.uady.sicei.kardex_service.mappers.CourseMapper;
+import mx.uady.sicei.kardex_service.mappers.EnrollmentMapper;
 import mx.uady.sicei.kardex_service.models.Course;
+import mx.uady.sicei.kardex_service.models.Enrollment;
 import mx.uady.sicei.kardex_service.repositories.CourseRepository;
+import mx.uady.sicei.kardex_service.repositories.EnrollmentRepository;
 import mx.uady.sicei.kardex_service.schemas.CourseSchema;
+import mx.uady.sicei.kardex_service.schemas.EnrollmentSchema;
 import mx.uady.sicei.kardex_service.schemas.SubjectSchema;
 import mx.uady.sicei.kardex_service.schemas.TeacherSchema;
 import org.springframework.stereotype.Service;
@@ -17,24 +21,30 @@ import org.springframework.stereotype.Service;
 public class CourseService {
   private final CourseMapper courseMapper;
   private final CourseRepository courseRepository;
+  private final EnrollmentMapper enrollmentMapper;
+  private final EnrollmentRepository enrollmentRepository;
   private final SubjectService subjectService;
   private final TeacherService teacherService;
 
   public CourseService(
       CourseMapper courseMapper,
       CourseRepository courseRepository,
+      EnrollmentMapper enrollmentMapper,
+      EnrollmentRepository enrollmentRepository,
       SubjectService subjectService,
       TeacherService teacherService) {
     this.courseMapper = courseMapper;
     this.courseRepository = courseRepository;
+    this.enrollmentMapper = enrollmentMapper;
+    this.enrollmentRepository = enrollmentRepository;
     this.subjectService = subjectService;
     this.teacherService = teacherService;
   }
 
-  public Course getCourseById(String courseId) {
-    CourseSchema course = this.findCourseByIdOrThrowAnException(courseId);
+  public List<Enrollment> getEnrollmentsByCourseId(String courseId) {
+    List<EnrollmentSchema> enrollments = enrollmentRepository.findAllByCourseId(courseId);
 
-    return courseMapper.toModel(course);
+    return enrollmentMapper.toModelList(enrollments);
   }
 
   public List<Course> getAllCourses() {

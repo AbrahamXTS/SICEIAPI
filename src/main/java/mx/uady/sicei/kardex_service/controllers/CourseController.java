@@ -7,6 +7,7 @@ import mx.uady.sicei.kardex_service.dto.commons.ResponseWrapper;
 import mx.uady.sicei.kardex_service.dto.course.CreateCourseDTO;
 import mx.uady.sicei.kardex_service.dto.course.UpdateCourseDTO;
 import mx.uady.sicei.kardex_service.models.Course;
+import mx.uady.sicei.kardex_service.models.Enrollment;
 import mx.uady.sicei.kardex_service.services.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,14 +30,15 @@ public class CourseController {
     this.courseService = courseService;
   }
 
-  @GetMapping("/{courseId}")
-  public ResponseEntity<ResponseWrapper<Course>> getCourseById(@PathVariable String courseId) {
+  @GetMapping("/{courseId}/enrollments")
+  public ResponseEntity<ResponseWrapper<List<Enrollment>>> getEnrollmentsByCourseId(
+      @PathVariable String courseId) {
     return ResponseEntity.status(HttpStatus.OK)
         .body(
-            ResponseWrapper.<Course>builder()
+            ResponseWrapper.<List<Enrollment>>builder()
                 .success(true)
-                .message("Curso con id %s:".formatted(courseId))
-                .data(courseService.getCourseById(courseId))
+                .message("Todas las inscripciones al curso con id %s:".formatted(courseId))
+                .data(courseService.getEnrollmentsByCourseId(courseId))
                 .build());
   }
 

@@ -21,12 +21,6 @@ public class TeacherService {
     this.teacherRepository = teacherRepository;
   }
 
-  public Teacher getTeacherByEmployeeId(String teacherId) {
-    TeacherSchema teacher = this.findTeacherByEmplooyeeIdOrThrowAnException(teacherId);
-
-    return teacherMapper.toModel(teacher);
-  }
-
   public List<Teacher> getAllTeachers() {
     List<TeacherSchema> teachers = teacherRepository.findAll();
 

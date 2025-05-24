@@ -30,18 +30,6 @@ public class TeacherController {
     this.teacherService = teacherService;
   }
 
-  @GetMapping("/{employeeId}")
-  @PreAuthorize("hasAuthority('teacher:read')")
-  public ResponseEntity<ResponseWrapper<Teacher>> getTeacherById(@PathVariable String employeeId) {
-    return ResponseEntity.status(HttpStatus.OK)
-        .body(
-            ResponseWrapper.<Teacher>builder()
-                .success(true)
-                .message("Profesor con id %s:".formatted(employeeId))
-                .data(teacherService.getTeacherByEmployeeId(employeeId))
-                .build());
-  }
-
   @GetMapping
   @PreAuthorize("hasAuthority('teacher:list')")
   public ResponseEntity<ResponseWrapper<List<Teacher>>> getAllTeachers() {

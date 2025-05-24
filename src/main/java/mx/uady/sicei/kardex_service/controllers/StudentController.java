@@ -6,6 +6,7 @@ import mx.uady.sicei.kardex_service.aspects.LogController;
 import mx.uady.sicei.kardex_service.dto.commons.ResponseWrapper;
 import mx.uady.sicei.kardex_service.dto.student.CreateStudentDTO;
 import mx.uady.sicei.kardex_service.dto.student.UpdateStudentDTO;
+import mx.uady.sicei.kardex_service.models.Enrollment;
 import mx.uady.sicei.kardex_service.models.Student;
 import mx.uady.sicei.kardex_service.services.StudentService;
 import org.springframework.http.HttpStatus;
@@ -30,15 +31,16 @@ public class StudentController {
     this.studentService = studentService;
   }
 
-  @GetMapping("/{studentId}")
+  @GetMapping("/{studentId}/enrollments")
   @PreAuthorize("hasAuthority('student:read')")
-  public ResponseEntity<ResponseWrapper<Student>> getStudentById(@PathVariable String studentId) {
+  public ResponseEntity<ResponseWrapper<List<Enrollment>>> getEnrollmentsByStudentId(
+      @PathVariable String studentId) {
     return ResponseEntity.status(HttpStatus.OK)
         .body(
-            ResponseWrapper.<Student>builder()
+            ResponseWrapper.<List<Enrollment>>builder()
                 .success(true)
-                .message("Estudiante con id %s:".formatted(studentId))
-                .data(studentService.getStudentById(studentId))
+                .message("Todas las inscripciones del alumno con id %s:".formatted(studentId))
+                .data(studentService.getEnrollmentsByStudentId(studentId))
                 .build());
   }
 

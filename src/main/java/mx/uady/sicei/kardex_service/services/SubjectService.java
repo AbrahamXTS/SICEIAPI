@@ -21,12 +21,6 @@ public class SubjectService {
     this.subjectRepository = subjectRepository;
   }
 
-  public Subject getSubjectById(String subjectId) {
-    SubjectSchema subject = this.findSubjectByIdOrThrowAnException(subjectId);
-
-    return subjectMapper.toModel(subject);
-  }
-
   public List<Subject> getAllSubjects() {
     List<SubjectSchema> subjects = subjectRepository.findAll();
 

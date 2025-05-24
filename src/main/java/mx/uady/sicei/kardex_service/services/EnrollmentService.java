@@ -1,8 +1,6 @@
 package mx.uady.sicei.kardex_service.services;
 
-import java.util.List;
 import mx.uady.sicei.kardex_service.dto.enrollment.CreateEnrollmentDTO;
-import mx.uady.sicei.kardex_service.dto.enrollment.UpdateEnrollmentDTO;
 import mx.uady.sicei.kardex_service.exceptions.ResourceNotFoundException;
 import mx.uady.sicei.kardex_service.mappers.EnrollmentMapper;
 import mx.uady.sicei.kardex_service.models.Enrollment;
@@ -30,18 +28,6 @@ public class EnrollmentService {
     this.studentService = studentService;
   }
 
-  public Enrollment getEnrollmentById(String enrollmentId) {
-    EnrollmentSchema enrollment = this.findEnrollmentByIdOrThrowAnException(enrollmentId);
-
-    return enrollmentMapper.toModel(enrollment);
-  }
-
-  public List<Enrollment> getAllEnrollments() {
-    List<EnrollmentSchema> enrollments = enrollmentRepository.findAll();
-
-    return enrollmentMapper.toModelList(enrollments);
-  }
-
   public Enrollment createEnrollment(CreateEnrollmentDTO enrollmentRequest) {
     CourseSchema course =
         courseService.findCourseByIdOrThrowAnException(enrollmentRequest.getCourseId());
@@ -58,23 +44,6 @@ public class EnrollmentService {
                 .build());
 
     return enrollmentMapper.toModel(enrollment);
-  }
-
-  public Enrollment updateEnrollment(UpdateEnrollmentDTO enrollmentRequest) {
-    EnrollmentSchema enrollment =
-        this.findEnrollmentByIdOrThrowAnException(enrollmentRequest.getId());
-
-    CourseSchema course =
-        courseService.findCourseByIdOrThrowAnException(enrollmentRequest.getCourseId());
-
-    StudentSchema student =
-        studentService.findStudentByIdOrThrowAnException(enrollmentRequest.getStudentId());
-
-    enrollment.setCourse(course);
-    enrollment.setStudent(student);
-    enrollment.setEnrollmentType(enrollmentRequest.getEnrollmentType());
-
-    return enrollmentMapper.toModel(enrollmentRepository.save(enrollment));
   }
 
   public void deleteEnrollment(String enrollmentId) {
