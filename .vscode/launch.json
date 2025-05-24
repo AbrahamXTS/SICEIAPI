@@ -1,13 +1,13 @@
 {
-    "configurations": [
-        {
-            "type": "java",
-            "name": "KardexServiceApplication",
-            "request": "launch",
-            "mainClass": "mx.uady.sicei.kardex_service.KardexServiceApplication",
-            "projectName": "sicei",
-            "vmArgs": "-Dspring.profiles.active=dev",
-            "envFile": "${workspaceFolder}/.env"
-        },
-    ],
+  "configurations": [
+    {
+      "type": "java",
+      "name": "KardexServiceApplication",
+      "request": "launch",
+      "mainClass": "mx.uady.sicei.kardex_service.KardexServiceApplication",
+      "projectName": "sicei",
+      "vmArgs": "-Dspring.profiles.active=dev",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ],
 }
