@@ -32,6 +32,7 @@ public class SubjectService {
         subjectRepository.save(
             SubjectSchema.builder()
                 .name(subjectRequest.getName())
+                .offeredInDegree(subjectRequest.getOfferedInDegree())
                 .courses(Collections.emptyList())
                 .build());
 
