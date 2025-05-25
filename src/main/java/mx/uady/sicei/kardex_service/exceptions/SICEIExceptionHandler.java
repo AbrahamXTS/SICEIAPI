@@ -2,6 +2,7 @@ package mx.uady.sicei.kardex_service.exceptions;
 
 import java.util.stream.Collectors;
 import mx.uady.sicei.kardex_service.dto.commons.ResponseWrapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authorization.AuthorizationDeniedException;
@@ -63,6 +64,20 @@ public class SICEIExceptionHandler {
             ResponseWrapper.<Void>builder()
                 .success(false)
                 .message("Algunas validaciones fallaron: %s".formatted(errors))
+                .data(null)
+                .build());
+  }
+
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  public ResponseEntity<ResponseWrapper<Void>> dataIntegrityViolationExceptionHandler(
+      DataIntegrityViolationException exception) {
+    return ResponseEntity.status(HttpStatus.CONFLICT)
+        .body(
+            ResponseWrapper.<Void>builder()
+                .success(false)
+                .message(
+                    "No se pudo completar la operación debido a un conflicto con los datos"
+                        + " existentes.")
                 .data(null)
                 .build());
   }
