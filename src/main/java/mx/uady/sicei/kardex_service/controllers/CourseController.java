@@ -11,6 +11,7 @@ import mx.uady.sicei.kardex_service.models.Enrollment;
 import mx.uady.sicei.kardex_service.services.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ public class CourseController {
   }
 
   @GetMapping("/{courseId}/enrollments")
+  @PreAuthorize("hasAuthority('enrollment:list')")
   public ResponseEntity<ResponseWrapper<List<Enrollment>>> getEnrollmentsByCourseId(
       @PathVariable String courseId) {
     return ResponseEntity.status(HttpStatus.OK)
@@ -43,6 +45,7 @@ public class CourseController {
   }
 
   @GetMapping
+  @PreAuthorize("hasAuthority('course:list')")
   public ResponseEntity<ResponseWrapper<List<Course>>> getAllCourses() {
     return ResponseEntity.status(HttpStatus.OK)
         .body(
@@ -54,6 +57,7 @@ public class CourseController {
   }
 
   @PostMapping
+  @PreAuthorize("hasAuthority('course:create')")
   public ResponseEntity<ResponseWrapper<Course>> createCourse(
       @RequestBody @Valid CreateCourseDTO course) {
     return ResponseEntity.status(HttpStatus.CREATED)
@@ -66,6 +70,7 @@ public class CourseController {
   }
 
   @PutMapping
+  @PreAuthorize("hasAuthority('course:update')")
   public ResponseEntity<ResponseWrapper<Course>> updateCourse(
       @RequestBody @Valid UpdateCourseDTO course) {
     return ResponseEntity.status(HttpStatus.OK)
@@ -78,6 +83,7 @@ public class CourseController {
   }
 
   @DeleteMapping("/{courseId}")
+  @PreAuthorize("hasAuthority('course:delete')")
   public ResponseEntity<ResponseWrapper<Void>> deleteCourseById(@PathVariable String courseId) {
     courseService.deleteCourse(courseId);
 

@@ -32,7 +32,7 @@ public class StudentController {
   }
 
   @GetMapping("/{studentId}/enrollments")
-  @PreAuthorize("hasAuthority('student:read')")
+  @PreAuthorize("hasAuthority('enrollment:list')")
   public ResponseEntity<ResponseWrapper<List<Enrollment>>> getEnrollmentsByStudentId(
       @PathVariable String studentId) {
     return ResponseEntity.status(HttpStatus.OK)

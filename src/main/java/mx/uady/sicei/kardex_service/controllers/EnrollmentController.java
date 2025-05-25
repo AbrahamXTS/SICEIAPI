@@ -8,6 +8,7 @@ import mx.uady.sicei.kardex_service.models.Enrollment;
 import mx.uady.sicei.kardex_service.services.EnrollmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ public class EnrollmentController {
   }
 
   @PostMapping
+  @PreAuthorize("hasAuthority('enrollment:create')")
   public ResponseEntity<ResponseWrapper<Enrollment>> createEnrollment(
       @RequestBody @Valid CreateEnrollmentDTO enrollment) {
     return ResponseEntity.status(HttpStatus.CREATED)
@@ -38,6 +40,7 @@ public class EnrollmentController {
   }
 
   @DeleteMapping("/{enrollmentId}")
+  @PreAuthorize("hasAuthority('enrollment:delete')")
   public ResponseEntity<ResponseWrapper<Void>> deleteEnrollmentById(
       @PathVariable String enrollmentId) {
     enrollmentService.deleteEnrollment(enrollmentId);

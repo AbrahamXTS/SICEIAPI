@@ -8,6 +8,7 @@ import mx.uady.sicei.kardex_service.models.Enrollment;
 import mx.uady.sicei.kardex_service.services.MetricsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ public class MetricsController {
   }
 
   @GetMapping("/students/approved-by-grade")
+  @PreAuthorize("hasAuthority('metrics:list')")
   public ResponseEntity<ResponseWrapper<Map<Integer, Map<String, List<Enrollment>>>>>
       getRegularStudentsGroupedByEquivalentDegree() {
     return ResponseEntity.status(HttpStatus.OK)
@@ -35,6 +37,7 @@ public class MetricsController {
   }
 
   @GetMapping("/students/with-failures-by-grade")
+  @PreAuthorize("hasAuthority('metrics:list')")
   public ResponseEntity<ResponseWrapper<Map<Integer, Map<String, List<Enrollment>>>>>
       getIrregularStudentsGroupedByEquivalentDegree() {
     return ResponseEntity.status(HttpStatus.OK)

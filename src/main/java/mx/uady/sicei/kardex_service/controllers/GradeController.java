@@ -9,6 +9,7 @@ import mx.uady.sicei.kardex_service.models.Grade;
 import mx.uady.sicei.kardex_service.services.GradeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ public class GradeController {
   }
 
   @PostMapping
+  @PreAuthorize("hasAuthority('grade:create')")
   public ResponseEntity<ResponseWrapper<Grade>> createGrade(
       @RequestBody @Valid CreateGradeDTO grade) {
     return ResponseEntity.status(HttpStatus.CREATED)
@@ -38,6 +40,7 @@ public class GradeController {
   }
 
   @PutMapping
+  @PreAuthorize("hasAuthority('grade:update')")
   public ResponseEntity<ResponseWrapper<Grade>> updateGrade(
       @RequestBody @Valid UpdateGradeDTO grade) {
     return ResponseEntity.status(HttpStatus.OK)
