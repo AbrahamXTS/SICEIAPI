@@ -1,6 +1,8 @@
 package mx.uady.sicei.kardex_service.services;
 
+import java.util.Objects;
 import mx.uady.sicei.kardex_service.dto.enrollment.CreateEnrollmentDTO;
+import mx.uady.sicei.kardex_service.exceptions.ConflictWithExistingResourceException;
 import mx.uady.sicei.kardex_service.exceptions.ResourceNotFoundException;
 import mx.uady.sicei.kardex_service.mappers.EnrollmentMapper;
 import mx.uady.sicei.kardex_service.models.Enrollment;
@@ -35,6 +37,12 @@ public class EnrollmentService {
     StudentSchema student =
         studentService.findStudentByIdOrThrowAnException(enrollmentRequest.getStudentId());
 
+    if (!Objects.equals(course.getSubject().getOfferedInDegree(), student.getEquivalentDegree())) {
+      throw new ConflictWithExistingResourceException(
+          "Los estudiantes solo pueden cursar asignaturas que se impartan para su mismo grado"
+              + " académico.");
+    }
+
     EnrollmentSchema enrollment =
         enrollmentRepository.save(
             EnrollmentSchema.builder()
@@ -55,6 +63,6 @@ public class EnrollmentService {
   public EnrollmentSchema findEnrollmentByIdOrThrowAnException(String enrollmentId) {
     return enrollmentRepository
         .findById(enrollmentId)
-        .orElseThrow(() -> new ResourceNotFoundException("Enrollment not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Inscripción no encontrada."));
   }
 }

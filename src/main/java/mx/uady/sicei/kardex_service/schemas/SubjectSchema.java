@@ -27,6 +27,9 @@ public class SubjectSchema extends BaseSchema {
   @Column(nullable = false)
   private String name;
 
+  @Column(nullable = false)
+  private Integer offeredInDegree;
+
   @OneToMany(mappedBy = "subject")
   private List<CourseSchema> courses;
 }

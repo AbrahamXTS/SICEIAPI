@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class Subject {
   private String id;
   private String name;
+  private Integer offeredInDegree;
 }
