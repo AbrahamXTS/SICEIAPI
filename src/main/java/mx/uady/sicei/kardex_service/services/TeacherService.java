@@ -62,6 +62,6 @@ public class TeacherService {
   public TeacherSchema findTeacherByEmplooyeeIdOrThrowAnException(String teacherId) {
     return teacherRepository
         .findById(teacherId)
-        .orElseThrow(() -> new ResourceNotFoundException("Teacher not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Profesor no encontrado."));
   }
 }

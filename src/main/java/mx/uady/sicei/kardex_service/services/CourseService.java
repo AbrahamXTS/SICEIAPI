@@ -95,6 +95,6 @@ public class CourseService {
   public CourseSchema findCourseByIdOrThrowAnException(String courseId) {
     return courseRepository
         .findById(courseId)
-        .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Curso no encontrado."));
   }
 }

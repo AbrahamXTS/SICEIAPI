@@ -55,6 +55,6 @@ public class SubjectService {
   public SubjectSchema findSubjectByIdOrThrowAnException(String subjectId) {
     return subjectRepository
         .findById(subjectId)
-        .orElseThrow(() -> new ResourceNotFoundException("Subject not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Asignatura no encontrada."));
   }
 }

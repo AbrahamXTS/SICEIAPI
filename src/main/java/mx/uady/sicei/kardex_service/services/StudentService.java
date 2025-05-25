@@ -81,6 +81,6 @@ public class StudentService {
   public StudentSchema findStudentByIdOrThrowAnException(String studentId) {
     return studentRepository
         .findById(studentId)
-        .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado."));
   }
 }

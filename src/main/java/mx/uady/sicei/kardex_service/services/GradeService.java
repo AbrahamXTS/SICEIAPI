@@ -47,6 +47,6 @@ public class GradeService {
   public GradeSchema findGradeByIdOrThrowAnException(String gradeId) {
     return gradeRepository
         .findById(gradeId)
-        .orElseThrow(() -> new ResourceNotFoundException("Grade not found"));
+        .orElseThrow(() -> new ResourceNotFoundException("Calificación no encontrada."));
   }
 }
